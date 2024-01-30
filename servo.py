@@ -19,26 +19,33 @@ class Ui_Form(object):
         self.radioButton.setEnabled(True)
         self.radioButton.setGeometry(QtCore.QRect(70, 80, 112, 23))
         self.radioButton.setObjectName("radioButton")
+        self.radioButton.toggled.connect(self.radiobtn_values)
         self.radioButton_2 = QtWidgets.QRadioButton(Form)
         self.radioButton_2.setEnabled(True)
         self.radioButton_2.setGeometry(QtCore.QRect(120, 80, 112, 23))
         self.radioButton_2.setObjectName("radioButton_2")
+        self.radioButton_2.toggled.connect(self.radiobtn_values)
         self.radioButton_3 = QtWidgets.QRadioButton(Form)
         self.radioButton_3.setEnabled(True)
         self.radioButton_3.setGeometry(QtCore.QRect(180, 80, 112, 23))
         self.radioButton_3.setObjectName("radioButton_3")
+        self.radioButton_3.toggled.connect(self.radiobtn_values)
         self.radioButton_4 = QtWidgets.QRadioButton(Form)
         self.radioButton_4.setEnabled(True)
         self.radioButton_4.setGeometry(QtCore.QRect(240, 80, 112, 23))
         self.radioButton_4.setObjectName("radioButton_4")
+        self.radioButton_4.toggled.connect(self.radiobtn_values)
         self.radioButton_5 = QtWidgets.QRadioButton(Form)
         self.radioButton_5.setEnabled(True)
         self.radioButton_5.setGeometry(QtCore.QRect(300, 80, 112, 23))
         self.radioButton_5.setObjectName("radioButton_5")
+        self.radioButton_5.toggled.connect(self.radiobtn_values)
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(380, 70, 181, 41))
         self.pushButton.setAutoFillBackground(False)
         self.pushButton.setObjectName("pushButton")
+        self.pushButton.setCheckable(True)
+        self.pushButton.clicked.connect(self.release_pressed)
         self.horizontalSlider = QtWidgets.QSlider(Form)
         self.horizontalSlider.setEnabled(True)
         self.horizontalSlider.setGeometry(QtCore.QRect(80, 160, 481, 20))
@@ -50,9 +57,32 @@ class Ui_Form(object):
         self.horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
         self.horizontalSlider.setProperty("Angle", 0)
         self.horizontalSlider.setObjectName("horizontalSlider")
+        self.horizontalSlider.valueChanged.connect(self.slider)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def radiobtn_values(self):    
+
+        if self.radioButton.isChecked():
+            self.dutyVal = int(self.radioButton.text())
+        elif self.radioButton_2.isChecked(): 
+            self.dutyVal = int(self.radioButton_2.text())
+        elif self.radioButton_3.isChecked(): 
+            self.dutyVal = int(self.radioButton_3.text())
+        elif self.radioButton_4.isChecked(): 
+            self.dutyVal = int(self.radioButton_4.text())
+        elif self.radioButton_5.isChecked(): 
+            self.dutyVal = int(self.radioButton_5.text())
+    
+    def release_pressed(self):
+        if self.pushButton.isChecked():
+            print("Release Motor")
+            return "release"
+
+    def slider(self):
+        print(self.horizontalSlider.value())
+        return self.horizontalSlider.value()
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -63,7 +93,7 @@ class Ui_Form(object):
         self.radioButton_4.setText(_translate("Form", "135"))
         self.radioButton_5.setText(_translate("Form", "180"))
         self.pushButton.setText(_translate("Form", "Release Motor"))
-
+        
 
 if __name__ == "__main__":
     import sys
@@ -73,3 +103,4 @@ if __name__ == "__main__":
     ui.setupUi(Form)
     Form.show()
     sys.exit(app.exec_())
+
